@@ -1,49 +1,25 @@
 //
 //  main.m
-//  宠物世界
+//  熬测第三题
 //
 //  Created by 朱凯捷 on 2017/10/23.
 //  Copyright © 2017年 朱凯捷. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "People.h"
-#import "Animal.h"
-#import "Dog.h"
-#import "Cat.h"
-
+#import "STMUserOwnedGame.h"
 int main(int argc, const char * argv[]) {
-    @autoreleasepool {
-        People *myself = [[People alloc]initWithName];
-        Cat *cat = [[Cat alloc]initWithName];
-        Dog *dog = [[Dog alloc]initWithName];
-        [cat set_name:@"Lovely"];
-        [dog set_name:@"Strong"];
-        
-        [cat setOwner:myself];
-        
-        [myself set_pet:cat];
-        [myself setPetName:cat._name];
-        
-        
-        NSLog(@"I choose %@ as my pet",myself.petName);
-        
-        
-        int i = 0, j = 0;
-        NSLog(@"Now I will touch my lovely pet:");
-        while (i < 20) {
-            [myself touchMyPet];
-            i++;
+    @autoreleasepool{
+        NSArray *array = [NSArray arrayWithContentsOfFile:@"/Users/triste/Downloads/iOS/user_owned_game.plist"];
+        NSMutableArray *newarray = [[NSMutableArray alloc]init];
+        for (int i = 0; i < [array count]; i++) {
+            STMUserOwnedGame *game = [[STMUserOwnedGame alloc]initWithDictionary:[array objectAtIndex:i]];
+            [newarray addObject:game];
         }
-        
-        
-        NSLog(@"Oh I see a little pet,I will touch it too");
-        while (j < 20) {
-            [myself touchOtherPet:dog];
-            j++;
+        for (int i = 0; i < [array count]; i++) {
+            STMUserOwnedGame *thegame = newarray[i];
+            NSLog(@"%@",thegame._name);
         }
-        
-        
     }
     return 0;
 }
